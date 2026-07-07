@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\airflow",
+    "\\airflow\\dags",
+    "\\docker",
+    "\\docker\\airflow",
+    "\\etl",
+    "\\sql"
+  ],
+  "SelectedNode": "\\etl\\pipeline.py",
+  "PreviewInSolutionExplorer": false
+}

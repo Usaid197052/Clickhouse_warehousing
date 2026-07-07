@@ -1,0 +1,6 @@
+clickhouse-connect==0.8.18
+python-dotenv==1.1.1
+pandas==2.2.3
+numpy==2.3.2
+pyarrow==21.0.0
+polars==1.32.0

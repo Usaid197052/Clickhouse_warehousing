@@ -1,0 +1,6 @@
+clickhouse-connect==0.8.18
+pandas==2.2.3
+numpy==2.3.2
+python-dotenv==1.1.1
+sqlalchemy==2.0.43
+pyarrow==21.0.0

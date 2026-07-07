@@ -1,0 +1,185 @@
+[2026-07-07T13:25:49.897+0500] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-07-07T13:25:49.908+0500] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_pipeline.run_pipeline manual__2026-07-07T08:20:47.568285+00:00 [queued]>
+[2026-07-07T13:25:49.918+0500] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_pipeline.run_pipeline manual__2026-07-07T08:20:47.568285+00:00 [queued]>
+[2026-07-07T13:25:49.923+0500] {taskinstance.py:2867} INFO - Starting attempt 2 of 2
+[2026-07-07T13:25:49.932+0500] {taskinstance.py:2890} INFO - Executing <Task(PythonOperator): run_pipeline> on 2026-07-07 08:20:47.568285+00:00
+[2026-07-07T13:25:49.940+0500] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'warehouse_pipeline', 'run_pipeline', 'manual__2026-07-07T08:20:47.568285+00:00', '--job-id', '11', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_pipeline.py', '--cfg-path', '/tmp/tmplaeql858']
+[2026-07-07T13:25:49.941+0500] {logging_mixin.py:190} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70 DeprecationWarning: This process (pid=291) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-07-07T13:25:49.943+0500] {standard_task_runner.py:105} INFO - Job 11: Subtask run_pipeline
+[2026-07-07T13:25:49.944+0500] {standard_task_runner.py:72} INFO - Started process 293 to run task
+[2026-07-07T13:25:49.993+0500] {task_command.py:467} INFO - Running <TaskInstance: warehouse_pipeline.run_pipeline manual__2026-07-07T08:20:47.568285+00:00 [running]> on host 086c75b96358
+[2026-07-07T13:25:50.044+0500] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Usaid' AIRFLOW_CTX_DAG_ID='warehouse_pipeline' AIRFLOW_CTX_TASK_ID='run_pipeline' AIRFLOW_CTX_EXECUTION_DATE='2026-07-07T08:20:47.568285+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-07-07T08:20:47.568285+00:00'
+[2026-07-07T13:25:50.045+0500] {taskinstance.py:732} INFO - ::endgroup::
+[2026-07-07T13:25:50.066+0500] {clickhouse_client.py:34} INFO - Connected to ClickHouse.
+[2026-07-07T13:25:50.076+0500] {clickhouse_client.py:34} INFO - Connected to ClickHouse.
+[2026-07-07T13:25:50.076+0500] {pipeline.py:18} INFO - ============================================================
+[2026-07-07T13:25:50.076+0500] {pipeline.py:19} INFO - Starting ELT Pipeline
+[2026-07-07T13:25:50.077+0500] {pipeline.py:20} INFO - ============================================================
+[2026-07-07T13:25:50.082+0500] {sql_executor.py:76} INFO - ============================================================
+[2026-07-07T13:25:50.082+0500] {sql_executor.py:78} INFO - Found 7 SQL files.
+[2026-07-07T13:25:50.082+0500] {sql_executor.py:80} INFO - ============================================================
+[2026-07-07T13:25:50.082+0500] {sql_executor.py:84} INFO - ------------------------------------------------------------
+[2026-07-07T13:25:50.083+0500] {sql_executor.py:86} INFO - Running 00_init.sql
+[2026-07-07T13:25:50.084+0500] {sql_executor.py:47} INFO - Executing 00_init.sql
+[2026-07-07T13:25:50.089+0500] {sql_executor.py:60} INFO - Running statement: CREATE DATABASE IF NOT EXISTS ecommerce;
+[2026-07-07T13:25:50.091+0500] {sql_executor.py:28} INFO - Completed in 0.00 seconds
+[2026-07-07T13:25:50.091+0500] {sql_executor.py:84} INFO - ------------------------------------------------------------
+[2026-07-07T13:25:50.091+0500] {sql_executor.py:86} INFO - Running 01_staging.sql
+[2026-07-07T13:25:50.093+0500] {sql_executor.py:47} INFO - Executing 01_staging.sql
+[2026-07-07T13:25:50.098+0500] {sql_executor.py:60} INFO - Running statement: DROP TABLE IF EXISTS ecommerce.stg_events;
+[2026-07-07T13:25:50.100+0500] {sql_executor.py:28} INFO - Completed in 0.00 seconds
+[2026-07-07T13:25:50.100+0500] {sql_executor.py:60} INFO - Running statement: CREATE TABLE ecommerce.stg_events
+[2026-07-07T13:25:50.115+0500] {sql_executor.py:28} INFO - Completed in 0.02 seconds
+[2026-07-07T13:25:50.116+0500] {sql_executor.py:60} INFO - Running statement: INSERT INTO ecommerce.stg_events
+[2026-07-07T13:25:50.117+0500] {sql_executor.py:36} ERROR - HTTPDriver for http://clickhouse:8123 received ClickHouse error code 60
+ Code: 60. DB::Exception: Unknown table expression identifier 'ecommerce.events' in scope SELECT event_time, toDate(event_time), toYear(event_time), toMonth(event_time), toDayOfMonth(event_time), toHour(event_time), lower(event_type), product_id, category_id, ifNull(category_code, 'Unknown'), ifNull(brand, 'Unknown'), price, user_id, user_session FROM ecommerce.events. Maybe you meant system.events?. (UNKNOWN_TABLE)
+
+[2026-07-07T13:25:50.118+0500] {taskinstance.py:3313} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/opt/airflow/etl/sql_executor.py", line 24, in execute
+    self.client.command(sql)
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/httpclient.py", line 368, in command
+    response = self._raw_request(payload, params, headers, method, fields=fields, server_wait=False)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/httpclient.py", line 481, in _raw_request
+    self._error_handler(response)
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/httpclient.py", line 402, in _error_handler
+    raise OperationalError(err_str) if retried else DatabaseError(err_str) from None
+clickhouse_connect.driver.exceptions.DatabaseError: HTTPDriver for http://clickhouse:8123 received ClickHouse error code 60
+ Code: 60. DB::Exception: Unknown table expression identifier 'ecommerce.events' in scope SELECT event_time, toDate(event_time), toYear(event_time), toMonth(event_time), toDayOfMonth(event_time), toHour(event_time), lower(event_type), product_id, category_id, ifNull(category_code, 'Unknown'), ifNull(brand, 'Unknown'), price, user_id, user_session FROM ecommerce.events. Maybe you meant system.events?. (UNKNOWN_TABLE)
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 768, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 734, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 424, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/etl/pipeline.py", line 79, in run_pipeline
+    return pipeline.run()
+           ^^^^^^^^^^^^^^
+  File "/opt/airflow/etl/pipeline.py", line 22, in run
+    results = self.executor.execute_directory("sql")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/etl/sql_executor.py", line 88, in execute_directory
+    status = self.execute_file(file)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/etl/sql_executor.py", line 64, in execute_file
+    self.execute(statement)
+  File "/opt/airflow/etl/sql_executor.py", line 38, in execute
+    raise SQLExecutionError(str(e))
+etl.exceptions.SQLExecutionError: HTTPDriver for http://clickhouse:8123 received ClickHouse error code 60
+ Code: 60. DB::Exception: Unknown table expression identifier 'ecommerce.events' in scope SELECT event_time, toDate(event_time), toYear(event_time), toMonth(event_time), toDayOfMonth(event_time), toHour(event_time), lower(event_type), product_id, category_id, ifNull(category_code, 'Unknown'), ifNull(brand, 'Unknown'), price, user_id, user_session FROM ecommerce.events. Maybe you meant system.events?. (UNKNOWN_TABLE)
+
+[2026-07-07T13:25:50.133+0500] {taskinstance.py:1226} INFO - Marking task as FAILED. dag_id=warehouse_pipeline, task_id=run_pipeline, run_id=manual__2026-07-07T08:20:47.568285+00:00, execution_date=20260707T082047, start_date=20260707T082549, end_date=20260707T082550
+[2026-07-07T13:25:50.152+0500] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2026-07-07T13:25:50.163+0500] {standard_task_runner.py:124} ERROR - Failed to execute job 11 for task run_pipeline (HTTPDriver for http://clickhouse:8123 received ClickHouse error code 60
+ Code: 60. DB::Exception: Unknown table expression identifier 'ecommerce.events' in scope SELECT event_time, toDate(event_time), toYear(event_time), toMonth(event_time), toDayOfMonth(event_time), toHour(event_time), lower(event_type), product_id, category_id, ifNull(category_code, 'Unknown'), ifNull(brand, 'Unknown'), price, user_id, user_session FROM ecommerce.events. Maybe you meant system.events?. (UNKNOWN_TABLE)
+; 293)
+Traceback (most recent call last):
+  File "/opt/airflow/etl/sql_executor.py", line 24, in execute
+    self.client.command(sql)
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/httpclient.py", line 368, in command
+    response = self._raw_request(payload, params, headers, method, fields=fields, server_wait=False)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/httpclient.py", line 481, in _raw_request
+    self._error_handler(response)
+  File "/home/airflow/.local/lib/python3.12/site-packages/clickhouse_connect/driver/httpclient.py", line 402, in _error_handler
+    raise OperationalError(err_str) if retried else DatabaseError(err_str) from None
+clickhouse_connect.driver.exceptions.DatabaseError: HTTPDriver for http://clickhouse:8123 received ClickHouse error code 60
+ Code: 60. DB::Exception: Unknown table expression identifier 'ecommerce.events' in scope SELECT event_time, toDate(event_time), toYear(event_time), toMonth(event_time), toDayOfMonth(event_time), toHour(event_time), lower(event_type), product_id, category_id, ifNull(category_code, 'Unknown'), ifNull(brand, 'Unknown'), price, user_id, user_session FROM ecommerce.events. Maybe you meant system.events?. (UNKNOWN_TABLE)
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py", line 117, in _start_by_fork
+    ret = args.func(args, dag=self.dag)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/cli_config.py", line 49, in command
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/cli.py", line 116, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 483, in task_run
+    task_return_code = _run_task_by_selected_method(args, _dag, ti)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 256, in _run_task_by_selected_method
+    return _run_raw_task(args, ti)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 341, in _run_raw_task
+    return ti._run_raw_task(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3006, in _run_raw_task
+    return _run_raw_task(
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 274, in _run_raw_task
+    TaskInstance._execute_task_with_callbacks(
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3161, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3185, in _execute_task
+    return _execute_task(self, context, task_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 768, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 734, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 424, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 238, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 256, in execute_callable
+    return runner.run(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/etl/pipeline.py", line 79, in run_pipeline
+    return pipeline.run()
+           ^^^^^^^^^^^^^^
+  File "/opt/airflow/etl/pipeline.py", line 22, in run
+    results = self.executor.execute_directory("sql")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/etl/sql_executor.py", line 88, in execute_directory
+    status = self.execute_file(file)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/etl/sql_executor.py", line 64, in execute_file
+    self.execute(statement)
+  File "/opt/airflow/etl/sql_executor.py", line 38, in execute
+    raise SQLExecutionError(str(e))
+etl.exceptions.SQLExecutionError: HTTPDriver for http://clickhouse:8123 received ClickHouse error code 60
+ Code: 60. DB::Exception: Unknown table expression identifier 'ecommerce.events' in scope SELECT event_time, toDate(event_time), toYear(event_time), toMonth(event_time), toDayOfMonth(event_time), toHour(event_time), lower(event_type), product_id, category_id, ifNull(category_code, 'Unknown'), ifNull(brand, 'Unknown'), price, user_id, user_session FROM ecommerce.events. Maybe you meant system.events?. (UNKNOWN_TABLE)
+
+[2026-07-07T13:25:50.199+0500] {local_task_job_runner.py:266} INFO - Task exited with return code 1
+[2026-07-07T13:25:50.209+0500] {taskinstance.py:3901} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-07-07T13:25:50.212+0500] {local_task_job_runner.py:245} INFO - ::endgroup::

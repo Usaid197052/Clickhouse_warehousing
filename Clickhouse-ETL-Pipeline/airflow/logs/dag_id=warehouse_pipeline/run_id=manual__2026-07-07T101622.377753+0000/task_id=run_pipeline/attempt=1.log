@@ -1,0 +1,120 @@
+[2026-07-07T15:16:24.350+0500] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-07-07T15:16:24.370+0500] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: warehouse_pipeline.run_pipeline manual__2026-07-07T10:16:22.377753+00:00 [queued]>
+[2026-07-07T15:16:24.377+0500] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: warehouse_pipeline.run_pipeline manual__2026-07-07T10:16:22.377753+00:00 [queued]>
+[2026-07-07T15:16:24.378+0500] {taskinstance.py:2867} INFO - Starting attempt 1 of 2
+[2026-07-07T15:16:24.391+0500] {taskinstance.py:2890} INFO - Executing <Task(PythonOperator): run_pipeline> on 2026-07-07 10:16:22.377753+00:00
+[2026-07-07T15:16:24.409+0500] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'warehouse_pipeline', 'run_pipeline', 'manual__2026-07-07T10:16:22.377753+00:00', '--job-id', '21', '--raw', '--subdir', 'DAGS_FOLDER/warehouse_pipeline.py', '--cfg-path', '/tmp/tmp2qnw175z']
+[2026-07-07T15:16:24.426+0500] {logging_mixin.py:190} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70 DeprecationWarning: This process (pid=233) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-07-07T15:16:24.439+0500] {standard_task_runner.py:105} INFO - Job 21: Subtask run_pipeline
+[2026-07-07T15:16:24.440+0500] {standard_task_runner.py:72} INFO - Started process 235 to run task
+[2026-07-07T15:16:24.558+0500] {task_command.py:467} INFO - Running <TaskInstance: warehouse_pipeline.run_pipeline manual__2026-07-07T10:16:22.377753+00:00 [running]> on host b6021b81e822
+[2026-07-07T15:16:24.677+0500] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Usaid' AIRFLOW_CTX_DAG_ID='warehouse_pipeline' AIRFLOW_CTX_TASK_ID='run_pipeline' AIRFLOW_CTX_EXECUTION_DATE='2026-07-07T10:16:22.377753+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-07-07T10:16:22.377753+00:00'
+[2026-07-07T15:16:24.679+0500] {taskinstance.py:732} INFO - ::endgroup::
+[2026-07-07T15:16:24.774+0500] {clickhouse_client.py:34} INFO - Connected to ClickHouse.
+[2026-07-07T15:16:24.787+0500] {clickhouse_client.py:34} INFO - Connected to ClickHouse.
+[2026-07-07T15:16:24.788+0500] {pipeline.py:18} INFO - ============================================================
+[2026-07-07T15:16:24.788+0500] {pipeline.py:19} INFO - Starting ELT Pipeline
+[2026-07-07T15:16:24.789+0500] {pipeline.py:20} INFO - ============================================================
+[2026-07-07T15:16:24.793+0500] {sql_executor.py:76} INFO - ============================================================
+[2026-07-07T15:16:24.794+0500] {sql_executor.py:78} INFO - Found 7 SQL files.
+[2026-07-07T15:16:24.794+0500] {sql_executor.py:80} INFO - ============================================================
+[2026-07-07T15:16:24.794+0500] {sql_executor.py:84} INFO - ------------------------------------------------------------
+[2026-07-07T15:16:24.795+0500] {sql_executor.py:86} INFO - Running 00_init.sql
+[2026-07-07T15:16:24.797+0500] {sql_executor.py:47} INFO - Executing 00_init.sql
+[2026-07-07T15:16:24.804+0500] {sql_executor.py:60} INFO - Running statement: CREATE DATABASE IF NOT EXISTS ecommerce;
+[2026-07-07T15:16:24.807+0500] {sql_executor.py:28} INFO - Completed in 0.00 seconds
+[2026-07-07T15:16:24.807+0500] {sql_executor.py:84} INFO - ------------------------------------------------------------
+[2026-07-07T15:16:24.808+0500] {sql_executor.py:86} INFO - Running 01_staging.sql
+[2026-07-07T15:16:24.810+0500] {sql_executor.py:47} INFO - Executing 01_staging.sql
+[2026-07-07T15:16:24.816+0500] {sql_executor.py:60} INFO - Running statement: DROP TABLE IF EXISTS ecommerce.stg_events;
+[2026-07-07T15:16:24.819+0500] {sql_executor.py:28} INFO - Completed in 0.00 seconds
+[2026-07-07T15:16:24.820+0500] {sql_executor.py:60} INFO - Running statement: CREATE TABLE ecommerce.stg_events
+[2026-07-07T15:16:24.850+0500] {sql_executor.py:28} INFO - Completed in 0.03 seconds
+[2026-07-07T15:16:24.850+0500] {sql_executor.py:60} INFO - Running statement: INSERT INTO ecommerce.stg_events
+[2026-07-07T15:17:31.745+0500] {sql_executor.py:28} INFO - Completed in 66.92 seconds
+[2026-07-07T15:17:31.746+0500] {sql_executor.py:84} INFO - ------------------------------------------------------------
+[2026-07-07T15:17:31.747+0500] {sql_executor.py:86} INFO - Running 02_dimensions.sql
+[2026-07-07T15:17:31.762+0500] {sql_executor.py:47} INFO - Executing 02_dimensions.sql
+[2026-07-07T15:17:31.769+0500] {sql_executor.py:60} INFO - Running statement: DROP TABLE IF EXISTS ecommerce.dim_products;
+[2026-07-07T15:17:31.803+0500] {sql_executor.py:28} INFO - Completed in 0.03 seconds
+[2026-07-07T15:17:31.804+0500] {sql_executor.py:60} INFO - Running statement: CREATE TABLE ecommerce.dim_products
+[2026-07-07T15:17:34.715+0500] {sql_executor.py:28} INFO - Completed in 2.91 seconds
+[2026-07-07T15:17:34.717+0500] {sql_executor.py:60} INFO - Running statement: DROP TABLE IF EXISTS ecommerce.dim_users;
+[2026-07-07T15:17:34.722+0500] {sql_executor.py:28} INFO - Completed in 0.00 seconds
+[2026-07-07T15:17:34.723+0500] {sql_executor.py:60} INFO - Running statement: CREATE TABLE ecommerce.dim_users
+[2026-07-07T15:17:39.296+0500] {sql_executor.py:28} INFO - Completed in 4.57 seconds
+[2026-07-07T15:17:39.297+0500] {sql_executor.py:60} INFO - Running statement: DROP TABLE IF EXISTS ecommerce.dim_categories;
+[2026-07-07T15:17:39.302+0500] {sql_executor.py:28} INFO - Completed in 0.00 seconds
+[2026-07-07T15:17:39.303+0500] {sql_executor.py:60} INFO - Running statement: CREATE TABLE ecommerce.dim_categories
+[2026-07-07T15:17:39.466+0500] {sql_executor.py:28} INFO - Completed in 0.16 seconds
+[2026-07-07T15:17:39.468+0500] {sql_executor.py:60} INFO - Running statement: DROP TABLE IF EXISTS ecommerce.dim_dates;
+[2026-07-07T15:17:39.475+0500] {sql_executor.py:28} INFO - Completed in 0.00 seconds
+[2026-07-07T15:17:39.477+0500] {sql_executor.py:60} INFO - Running statement: CREATE TABLE ecommerce.dim_dates
+[2026-07-07T15:17:39.747+0500] {sql_executor.py:28} INFO - Completed in 0.27 seconds
+[2026-07-07T15:17:39.748+0500] {sql_executor.py:84} INFO - ------------------------------------------------------------
+[2026-07-07T15:17:39.750+0500] {sql_executor.py:86} INFO - Running 03_fact_events.sql
+[2026-07-07T15:17:39.752+0500] {sql_executor.py:47} INFO - Executing 03_fact_events.sql
+[2026-07-07T15:17:39.756+0500] {sql_executor.py:60} INFO - Running statement: DROP TABLE IF EXISTS ecommerce.fact_events;
+[2026-07-07T15:17:39.760+0500] {sql_executor.py:28} INFO - Completed in 0.00 seconds
+[2026-07-07T15:17:39.761+0500] {sql_executor.py:60} INFO - Running statement: CREATE TABLE ecommerce.fact_events
+[2026-07-07T15:17:39.774+0500] {sql_executor.py:28} INFO - Completed in 0.01 seconds
+[2026-07-07T15:17:39.775+0500] {sql_executor.py:60} INFO - Running statement: INSERT INTO ecommerce.fact_events
+[2026-07-07T15:18:12.607+0500] {job.py:229} INFO - Heartbeat recovered after 11.49 seconds
+[2026-07-07T15:18:27.084+0500] {job.py:229} INFO - Heartbeat recovered after 20.94 seconds
+[2026-07-07T15:18:40.457+0500] {sql_executor.py:28} INFO - Completed in 60.72 seconds
+[2026-07-07T15:18:40.460+0500] {sql_executor.py:84} INFO - ------------------------------------------------------------
+[2026-07-07T15:18:40.461+0500] {sql_executor.py:86} INFO - Running 04_materialized_views.sql
+[2026-07-07T15:18:40.464+0500] {sql_executor.py:47} INFO - Executing 04_materialized_views.sql
+[2026-07-07T15:18:40.469+0500] {sql_executor.py:60} INFO - Running statement: DROP VIEW IF EXISTS ecommerce.mv_daily_sales;
+[2026-07-07T15:18:40.479+0500] {sql_executor.py:28} INFO - Completed in 0.01 seconds
+[2026-07-07T15:18:40.480+0500] {sql_executor.py:60} INFO - Running statement: CREATE MATERIALIZED VIEW ecommerce.mv_daily_sales
+[2026-07-07T15:18:45.192+0500] {sql_executor.py:28} INFO - Completed in 4.71 seconds
+[2026-07-07T15:18:45.195+0500] {sql_executor.py:84} INFO - ------------------------------------------------------------
+[2026-07-07T15:18:45.195+0500] {sql_executor.py:86} INFO - Running 05_data_marts.sql
+[2026-07-07T15:18:45.198+0500] {sql_executor.py:47} INFO - Executing 05_data_marts.sql
+[2026-07-07T15:18:45.207+0500] {sql_executor.py:60} INFO - Running statement: DROP TABLE IF EXISTS ecommerce.sales_dashboard;
+[2026-07-07T15:18:45.314+0500] {sql_executor.py:28} INFO - Completed in 0.11 seconds
+[2026-07-07T15:18:45.315+0500] {sql_executor.py:60} INFO - Running statement: CREATE TABLE ecommerce.sales_dashboard
+[2026-07-07T15:18:49.747+0500] {sql_executor.py:28} INFO - Completed in 4.43 seconds
+[2026-07-07T15:18:49.748+0500] {sql_executor.py:60} INFO - Running statement: DROP TABLE IF EXISTS ecommerce.brand_dashboard;
+[2026-07-07T15:18:49.766+0500] {sql_executor.py:28} INFO - Completed in 0.02 seconds
+[2026-07-07T15:18:49.767+0500] {sql_executor.py:60} INFO - Running statement: CREATE TABLE ecommerce.brand_dashboard
+[2026-07-07T15:19:07.228+0500] {sql_executor.py:28} INFO - Completed in 17.44 seconds
+[2026-07-07T15:19:07.235+0500] {sql_executor.py:60} INFO - Running statement: DROP TABLE IF EXISTS ecommerce.category_dashboard;
+[2026-07-07T15:19:07.352+0500] {sql_executor.py:28} INFO - Completed in 0.12 seconds
+[2026-07-07T15:19:07.355+0500] {sql_executor.py:60} INFO - Running statement: CREATE TABLE ecommerce.category_dashboard
+[2026-07-07T15:19:07.880+0500] {sql_executor.py:28} INFO - Completed in 0.52 seconds
+[2026-07-07T15:19:07.882+0500] {sql_executor.py:84} INFO - ------------------------------------------------------------
+[2026-07-07T15:19:07.887+0500] {sql_executor.py:86} INFO - Running 06_quality_checks.sql
+[2026-07-07T15:19:07.900+0500] {sql_executor.py:47} INFO - Executing 06_quality_checks.sql
+[2026-07-07T15:19:07.912+0500] {sql_executor.py:60} INFO - Running statement: SELECT 'events' table_name,count() rows FROM ecommerce.events
+[2026-07-07T15:19:07.951+0500] {sql_executor.py:28} INFO - Completed in 0.04 seconds
+[2026-07-07T15:19:07.952+0500] {sql_executor.py:60} INFO - Running statement: SELECT
+[2026-07-07T15:19:08.072+0500] {sql_executor.py:28} INFO - Completed in 0.12 seconds
+[2026-07-07T15:19:08.073+0500] {sql_executor.py:60} INFO - Running statement: SELECT event_type,count()
+[2026-07-07T15:19:08.262+0500] {sql_executor.py:28} INFO - Completed in 0.18 seconds
+[2026-07-07T15:19:08.264+0500] {sql_executor.py:97} INFO - ============================================================
+[2026-07-07T15:19:08.264+0500] {sql_executor.py:99} INFO - SQL execution complete.
+[2026-07-07T15:19:08.265+0500] {sql_executor.py:101} INFO - ============================================================
+[2026-07-07T15:19:08.266+0500] {pipeline.py:24} INFO - ============================================================
+[2026-07-07T15:19:08.266+0500] {pipeline.py:25} INFO - Running Warehouse Validation
+[2026-07-07T15:19:08.266+0500] {pipeline.py:26} INFO - ============================================================
+[2026-07-07T15:19:08.282+0500] {validation.py:21} INFO - ecommerce.events: 67,501,979 rows
+[2026-07-07T15:19:08.287+0500] {validation.py:21} INFO - ecommerce.stg_events: 10,485,760 rows
+[2026-07-07T15:19:08.300+0500] {validation.py:21} INFO - ecommerce.dim_products: 190,662 rows
+[2026-07-07T15:19:08.328+0500] {validation.py:21} INFO - ecommerce.dim_users: 3,696,117 rows
+[2026-07-07T15:19:08.333+0500] {validation.py:21} INFO - ecommerce.dim_categories: 684 rows
+[2026-07-07T15:19:08.338+0500] {validation.py:21} INFO - ecommerce.dim_dates: 30 rows
+[2026-07-07T15:19:08.342+0500] {validation.py:21} INFO - ecommerce.fact_events: 67,501,979 rows
+[2026-07-07T15:19:08.346+0500] {validation.py:21} INFO - ecommerce.sales_dashboard: 30 rows
+[2026-07-07T15:19:08.351+0500] {validation.py:21} INFO - ecommerce.brand_dashboard: 4,032 rows
+[2026-07-07T15:19:08.358+0500] {validation.py:21} INFO - ecommerce.category_dashboard: 684 rows
+[2026-07-07T15:19:08.361+0500] {pipeline.py:66} INFO - ============================================================
+[2026-07-07T15:19:08.362+0500] {pipeline.py:68} INFO - Pipeline Finished Successfully
+[2026-07-07T15:19:08.362+0500] {pipeline.py:70} INFO - ============================================================
+[2026-07-07T15:19:08.363+0500] {python.py:240} INFO - Done. Returned value was: [{'file': '00_init.sql', 'status': True}, {'file': '01_staging.sql', 'status': True}, {'file': '02_dimensions.sql', 'status': True}, {'file': '03_fact_events.sql', 'status': True}, {'file': '04_materialized_views.sql', 'status': True}, {'file': '05_data_marts.sql', 'status': True}, {'file': '06_quality_checks.sql', 'status': True}]
+[2026-07-07T15:19:08.412+0500] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2026-07-07T15:19:08.413+0500] {taskinstance.py:353} INFO - Marking task as SUCCESS. dag_id=warehouse_pipeline, task_id=run_pipeline, run_id=manual__2026-07-07T10:16:22.377753+00:00, execution_date=20260707T101622, start_date=20260707T101624, end_date=20260707T101908
+[2026-07-07T15:19:08.474+0500] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-07-07T15:19:08.491+0500] {taskinstance.py:3901} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-07-07T15:19:08.495+0500] {local_task_job_runner.py:245} INFO - ::endgroup::
