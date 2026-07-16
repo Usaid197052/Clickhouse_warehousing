@@ -1,4 +1,4 @@
-import clickhouse_connect
+
 
 from etl.config import Config
 from etl.logger import get_logger
